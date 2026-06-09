@@ -1,0 +1,153 @@
+
+/* WARNA GLOBAL*/
+:root {
+    --primary-orange: #F97316; 
+    --primary-orange-hover: #EA580C;
+    --bg-light: #F8FAFC;
+    --text-dark: #1E293B;
+    --border-color: #E2E8F0;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+
+
+
+
+/* CSS NAVBAR */
+.custom-navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+}
+
+.custom-navbar .navbar-brand {
+    color: var(--primary-orange);
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.custom-navbar .nav-link {
+    color: var(--text-dark);
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.custom-navbar .nav-link:hover, 
+.custom-navbar .nav-link.active {
+    background-color: rgba(249, 115, 22, 0.1);
+    color: var(--primary-orange);
+}
+
+
+
+
+
+
+
+/* CARD DASHBOARD*/
+.stat-card {
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 5px solid transparent;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
+}
+
+.card-semua { border-left-color: #3B82F6; }
+.card-menipis { border-left-color: #F59E0B; }
+.card-habis { border-left-color: #EF4444; }
+.card-kategori { border-left-color: #efe944; }
+
+.stat-card .card-title {
+    color: #64748B;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-card h2 {
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-top: 10px;
+}
+
+
+
+/* TABEL */
+.custom-table-card {
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.table > thead {
+    background-color: #f1f5f9;
+}
+.table > thead > tr > th {
+    color: #475569;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-color);
+}
+
+/* BUTTON */
+.btn-primary-custom {
+    background-color: var(--primary-orange);
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+.btn-primary-custom:hover {
+    background-color: var(--primary-orange-hover);
+    color: white;
+}
+
+
+
+
+/* PAGNATION */
+.pagination .page-link {
+    color: var(--primary-orange);
+    border-color: var(--border-color);
+    box-shadow: none; /* Menghilangkan efek glow biru bawaan bootstrap */
+}
+
+.pagination .page-link:hover {
+    color: var(--primary-orange-hover);
+    background-color: rgba(249, 115, 22, 0.1);
+    border-color: var(--border-color);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-orange);
+    border-color: var(--primary-orange);
+    color: #ffffff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #94a3b8;
+    background-color: #f8fafc;
+    border-color: var(--border-color);
+}
+.custom-pagination p.small {
+    display: none !important;
+}
+
+.custom-pagination nav > div.d-sm-flex {
+    justify-content: flex-end !important;
+}
