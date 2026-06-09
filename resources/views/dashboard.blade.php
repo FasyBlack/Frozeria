@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row mb-4">
-        
+
         <div class="col-md-3">
             <div class="card stat-card card-semua mb-3 p-2">
                 <div class="card-body">
@@ -46,14 +46,13 @@
         <div class="col-md-12">
             <div class="card custom-table-card">
                 <div class="card-body">
-                    <form action="{{ route('dashboard') }}" method="GET" class="row g-3 mb-4">
+                    <div class="row g-3 mb-4">
                         <div class="col-md-4">
-                            <input type="text" name="search" class="form-control rounded-pill px-3"
-                                placeholder=" Cari nama barang..." value="{{ request('search') }}">
+                            <input type="text" name="search" id="searchInput" class="form-control rounded-pill px-3" placeholder=" Cari nama barang..." value="{{ request('search') }}">
                         </div>
 
                         <div class="col-md-3">
-                            <select name="kategori_id" class="form-select rounded-pill">
+                            <select name="kategori_id" id="kategoriSelect" class="form-select rounded-pill">
                                 <option value="">Semua kategori</option>
                                 @foreach ($kategoris as $kategori)
                                     <option value="{{ $kategori->id }}"
@@ -64,16 +63,16 @@
                             </select>
                         </div>
 
-                        <div class="col-md-2">
+                        {{-- <div class="col-md-2">
                             <button type="submit" class="btn btn-secondary rounded-pill w-100">Cari</button>
-                        </div>
+                        </div> --}}
 
-                        <div class="col-md-3 text-end">
+                        <div class="col-md-5 text-end">
                             <a href="{{ route('barang.create') }}" class="btn btn-primary-custom rounded-pill px-4">Tambah
                                 Barang</a>
                         </div>
 
-                    </form>
+                    </div>
 
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
@@ -87,7 +86,7 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tableBody">
                                 @forelse($barangs as $barang)
                                     <tr>
                                         <td class="fw-medium">{{ $barang->nama_barang }}</td>
@@ -155,7 +154,7 @@
                         </table>
                     </div>
 
-                    <div class="d-flex justify-content-between align-items-center mt-3 border-top pt-3 text-muted"
+                    <div id="paginationContainer" class="d-flex justify-content-between align-items-center mt-3 border-top pt-3 text-muted"
                         style="font-size: 0.9rem;">
                         <div>Menampilkan {{ $barangs->firstItem() ?? 0 }} - {{ $barangs->lastItem() ?? 0 }} dari
                             {{ $barangs->total() }} barang</div>
@@ -168,3 +167,46 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const kategoriSelect = document.getElementById('kategoriSelect');
+
+    function kirimPencarianLive(urlHalaman = null) {
+        let keyword = searchInput.value;
+        let kategori = kategoriSelect.value;
+
+        let url = urlHalaman ? urlHalaman : `{{ route('dashboard') }}?search=${keyword}&kategori_id=${kategori}`;
+
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                let parser = new DOMParser();
+                let doc = parser.parseFromString(html, 'text/html');
+
+                document.getElementById('tableBody').innerHTML = doc.getElementById('tableBody').innerHTML;
+                document.getElementById('paginationContainer').innerHTML = doc.getElementById('paginationContainer').innerHTML;
+
+                menjagaKlikPagination();
+            });
+    }
+
+    function menjagaKlikPagination() {
+        const links = document.querySelectorAll('#paginationContainer a');
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Stop reload!
+                let urlTujuan = this.getAttribute('href');
+                kirimPencarianLive(urlTujuan);
+            });
+        });
+    }
+
+    searchInput.addEventListener('keyup', () => kirimPencarianLive());
+
+    kategoriSelect.addEventListener('change', () => kirimPencarianLive());
+
+    menjagaKlikPagination();
+</script>
+@endpush
